@@ -23,7 +23,7 @@ module.exports = React.createClass({
 
   componentDidMount: function() {
     // This is such a hack to wait for the handler to register
-    Bacon.when([LiveDataActions.trainListDidMount], () => LiveDataActions.station.push('TPE')).onValue()
+    LiveDataActions.trainListDidMount.onValue(() => LiveDataActions.station.push('TPE'))
   },
 
   render: () => {
