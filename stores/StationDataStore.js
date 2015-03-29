@@ -45,8 +45,7 @@ var stationArrivalView = station.zip(stationTrains, (station, trains) =>
         arrivalTime: moment(arrival.scheduledTime || null),
         actualArrivalTime: moment(arrival.liveEstimateTime || null),
         departureTime: moment(departure.scheduledTime || null),
-        actualDepartureTime: moment(departure.liveEstimateTime || null),
-        late: arrival.differenceInMinutes > 0
+        actualDepartureTime: moment(departure.liveEstimateTime || null)
       }
     })
     .sortBy((element) => element.arrivalTime.isValid() ? element.arrivalTime : element.departureTime)
