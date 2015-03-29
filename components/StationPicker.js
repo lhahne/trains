@@ -27,7 +27,7 @@ module.exports = React.createClass({
 
   render: () => {
     return (
-      <Text style={styles.title}>Tampere Arrivals</Text>
+      <Text style={styles.title}>Tampere Trains 列車</Text>
     )
   }
 })
