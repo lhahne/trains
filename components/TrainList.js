@@ -8,10 +8,16 @@ var {
   ListView,
 } = React
 
-var _ = require('lodash-node')
+var _      = require('lodash-node')
+var moment = require('moment')
 
 var StationDataStore = require('../stores/StationDataStore')
 var LiveDataActions  = require('../actions/LiveDataActions')
+
+var TIME_FORMAT      = 'HH:mm'
+
+var formatTime = (time) =>
+  time.format(TIME_FORMAT)
 
 var styles = StyleSheet.create({
   listView: {
@@ -23,15 +29,24 @@ var styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   trainRowLeft: {
-    flex: 1,
-    backgroundColor: '#66FF66',
+    flex: 0.9,
+    backgroundColor: '#66FF66'
+  },
+  rightColumn: {
+    flex: 3,
+    flexDirection: 'column'
   },
   trainRowRight: {
     flex: 3,
     flexDirection: 'row'
   },
   trainText: {
-    fontSize: 25
+    flex: 0.8,
+    fontSize: 21
+  },
+  trainTextOffTime: {
+    flex: 1.0,
+    fontSize: 21
   },
   welcome: {
     fontSize: 20,
@@ -60,18 +75,41 @@ module.exports = React.createClass({
   },
 
   renderTrain: function(train) {
-    var lateElement
-    if (train.late) {
-      lateElement = (<Text style={styles.trainText}>{'→'}{train.actualArrivalTime}</Text>)
+    var trainTextElement = (time, displayArrow = false) =>
+      <Text style={styles.trainText}>{displayArrow ? '→' : ''}{formatTime(time)}</Text>
+
+    var arrivesLate = train.arrivalTime.isBefore(train.actualArrivalTime, 'minute')
+    var departsLate = train.departureTime.isBefore(train.actualDepartureTime, 'minute')
+    var isLate      = arrivesLate || departsLate
+
+    if (arrivesLate) {
+      var arriveLateElement = (<Text style={styles.trainTextOffTime}>{'→'}{formatTime(train.actualArrivalTime)}</Text>)
     }
+    else {
+      var arriveLateElement = <Text style={styles.trainTextOffTime}></Text>
+    }
+    if (departsLate) {
+      var departLateElement = (<Text style={styles.trainTextOffTime}>{'→'}{formatTime(train.actualDepartureTime)}</Text>)
+    }
+    else {
+      var departLateElement = <Text style={styles.trainTextOffTime}></Text>
+    }
+
     return (
       <View style={styles.trainRow}>
-        <View style={[styles.trainRowLeft, train.late && {backgroundColor: 'red'}]}>
+        <View style={[styles.trainRowLeft, arrivesLate && {backgroundColor: 'yellow'}, departsLate && {backgroundColor: 'red'}]}>
           <Text style={styles.trainText}>{train.trainType} {train.trainNumber}</Text>
         </View>
-        <View style={styles.trainRowRight}>
-          <Text style={styles.trainText}>{train.arrivalTime}</Text>
-          {lateElement}
+        <View style={styles.rightColumn}>
+          <View>
+            <Text style={styles.trainText}>{train.firstStation} - {train.lastStation}</Text>
+          </View>
+          <View style={styles.trainRowRight}>
+            {trainTextElement(train.arrivalTime)}
+            {arriveLateElement}
+            {trainTextElement(train.departureTime)}
+            {departLateElement}
+          </View>
         </View>
       </View>
     )

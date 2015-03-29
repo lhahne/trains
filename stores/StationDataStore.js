@@ -8,10 +8,6 @@ var moment = require('moment')
 
 var STATION_DATA_URL = 'http://rata.digitraffic.fi/api/v1/live-trains?station='
 var ACCEPTED_TRAINS  = ['IC', 'S', 'P', 'H']
-var TIME_FORMAT      = 'HH:mm'
-
-var formatTime = (time) =>
-  moment(time).format(TIME_FORMAT)
 
 var station = LiveDataActions.station
 
@@ -30,16 +26,26 @@ var stationTrains = station
         _.contains(ACCEPTED_TRAINS, train.trainType))
   )
 
+// thanks guys. the api dataformat sucks
 var stationArrivalView = station.zip(stationTrains, (station, trains) =>
     _(trains).map((train) => {
-      var arrival = train.timeTableRows.filter((row) => {
+      var rows = train.timeTableRows.filter((row) => {
           return row.stationShortCode === station
-        })[0]
+        })
+      var arrival   = _(rows).filter((row) => row.type === 'ARRIVAL').first()
+      var departure = _(rows).filter((row) => row.type === 'DEPARTURE').first()
+
+      arrival   = arrival ? arrival : {}
+      departure = departure ? departure : {}
 
       return {
+        firstStation: _(train.timeTableRows).first().stationShortCode,
+        lastStation: _(train.timeTableRows).last().stationShortCode,
         trainNumber: train.trainType + ' ' + train.trainNumber,
-        arrivalTime: formatTime(arrival.scheduledTime),
-        actualArrivalTime: formatTime(arrival.liveEstimateTime),
+        arrivalTime: moment(arrival.scheduledTime),
+        actualArrivalTime: moment(arrival.liveEstimateTime),
+        departureTime: moment(departure.scheduledTime),
+        actualDepartureTime: moment(departure.liveEstimateTime),
         late: arrival.differenceInMinutes > 0
       }
     })
