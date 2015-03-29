@@ -73,6 +73,7 @@ var AwesomeProject = React.createClass({
     if (this.state.loaded) {
       return (
         <View style={styles.container}>
+        <Text style={{fontSize: '30'}}>Tunkki</Text>
           <ListView
             dataSource={this.state.dataSource}
             renderRow={this.renderTrain}
