@@ -73,7 +73,7 @@ var AwesomeProject = React.createClass({
     if (this.state.loaded) {
       return (
         <View style={styles.container}>
-        <Text style={{fontSize: '30'}}>Tunkki</Text>
+          <Text style={styles.title}>Tampere Arrivals</Text>
           <ListView
             dataSource={this.state.dataSource}
             renderRow={this.renderTrain}
@@ -92,8 +92,12 @@ var AwesomeProject = React.createClass({
 });
 
 var styles = StyleSheet.create({
+  title: {
+    fontSize: 30,
+    backgroundColor: 'white',
+    marginTop: 15
+  },
   container: {
-    backgroundColor: 'red',
     flexDirection: 'column'
   },
   listView: {
