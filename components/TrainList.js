@@ -49,7 +49,6 @@ module.exports = React.createClass({
     this.unsubscribe = StationDataStore.stationArrivalView.onValue((stationView) => {
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(stationView),
-        loaded: true
       })
     })
     LiveDataActions.trainListDidMount.push(true)
@@ -81,25 +80,15 @@ module.exports = React.createClass({
     return {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => _.isEqual(row1, row2)
-      }),
-      loaded: false
+      })
     }
-  },
-
-  loadingView: function() {
-    return (
-      <Text>Loading</Text>
-    )
   },
 
   render: function() {
-    if (!this.state.loaded) {
-      return this.loadingView()
-    }
-
     return (
       <ListView
         dataSource={this.state.dataSource}
+        pageSize={10}
         renderRow={this.renderTrain}
         style={styles.listView}
       />
