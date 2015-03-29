@@ -7,7 +7,7 @@ var Bacon  = require('baconjs')
 var moment = require('moment')
 
 var STATION_DATA_URL = 'http://rata.digitraffic.fi/api/v1/live-trains?station='
-var ACCEPTED_TRAINS  = ['IC', 'S', 'P']
+var ACCEPTED_TRAINS  = ['IC', 'S', 'P', 'H']
 var TIME_FORMAT      = 'HH:mm'
 
 var formatTime = (time) =>
