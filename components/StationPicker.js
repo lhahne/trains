@@ -1,13 +1,12 @@
+'use strict'
+
 var React = require('react-native')
 var {
-  AppRegistry,
   StyleSheet,
-  Text,
-  View,
-  ListView,
+  Text
 } = React
 
-Bacon = require('baconjs')
+var Bacon = require('baconjs')
 
 var LiveDataActions  = require('../actions/LiveDataActions')
 
