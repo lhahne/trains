@@ -56,10 +56,9 @@ var stationArrivalView = stationTrains.zip(station, (st, s) => {
       .value()
 
   })
-  .onValue((v) => console.log(v))
 
 
 module.exports = {
   stationTrains: stationTrains,
-  //stationArrivalView: stationArrivalView
+  stationArrivalView: stationArrivalView
 }

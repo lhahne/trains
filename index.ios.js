@@ -16,52 +16,37 @@ var {
 var _ = require('lodash-node')
 var moment = require('moment')
 
-var LiveDataActions = require('./actions/LiveDataActions')
-require('./stores/StationDataStore')
-LiveDataActions.station.push('TPE')
+var LiveDataActions  = require('./actions/LiveDataActions')
+var StationDataStore = require('./stores/StationDataStore')
 
 var AwesomeProject = React.createClass({
   componentDidMount: function() {
-    this.fetchData()
+    StationDataStore.stationArrivalView.onValue((stationView) => {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(stationView),
+        loaded: true
+      })
+    })
+
+    LiveDataActions.station.push('TPE')
   },
 
   renderTrain: function(train) {
-    var tampereArrival = train.timeTableRows.filter((row) => {
-      return row.stationShortCode == 'TPE'
-    })[0]
-    var arrivalTime = moment(tampereArrival.scheduledTime).format('HH:mm')
-    var actualArrivalTime = moment(tampereArrival.liveEstimateTime).format('HH:mm')
-    var late = tampereArrival.differenceInMinutes > 0
     var lateElement
-    if (late) {
-      lateElement = (<Text style={styles.trainText}>{'→'}{actualArrivalTime}</Text>)
+    if (train.late) {
+      lateElement = (<Text style={styles.trainText}>{'→'}{train.actualArrivalTime}</Text>)
     }
     return (
       <View style={styles.trainRow}>
-        <View style={[styles.trainRowLeft, late && {backgroundColor: 'red'}]}>
+        <View style={[styles.trainRowLeft, train.late && {backgroundColor: 'red'}]}>
           <Text style={styles.trainText}>{train.trainType} {train.trainNumber}</Text>
         </View>
         <View style={styles.trainRowRight}>
-          <Text style={styles.trainText}>{arrivalTime}</Text>
+          <Text style={styles.trainText}>{train.arrivalTime}</Text>
           {lateElement}
         </View>
       </View>
     )
-  },
-
-  fetchData: function () {
-    fetch('http://rata.digitraffic.fi/api/v1/live-trains?station=TPE')
-      .then((response) => response.json())
-      .then((responseData) => {
-        var trains =_(responseData)
-                      .filter((t) => _.contains(['IC', 'S', 'P'], t.trainType))
-                      .value()
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(trains),
-          loaded: true
-        })
-      })
-      .done()
   },
 
   getInitialState: function() {
@@ -110,8 +95,6 @@ var styles = StyleSheet.create({
   trainRow: {
     flex: 1,
     flexDirection: 'row',
-    //justifyContent: 'flex-start',
-    //alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
   trainRowLeft: {
