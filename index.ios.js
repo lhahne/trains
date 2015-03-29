@@ -19,6 +19,8 @@ var moment = require('moment')
 var LiveDataActions  = require('./actions/LiveDataActions')
 var StationDataStore = require('./stores/StationDataStore')
 
+var StationPicker = require('./components/StationPicker')
+
 var AwesomeProject = React.createClass({
   componentDidMount: function() {
     StationDataStore.stationArrivalView.onValue((stationView) => {
@@ -62,7 +64,7 @@ var AwesomeProject = React.createClass({
     if (this.state.loaded) {
       return (
         <View style={styles.container}>
-          <Text style={styles.title}>Tampere Arrivals</Text>
+          <StationPicker />
           <ListView
             dataSource={this.state.dataSource}
             renderRow={this.renderTrain}
@@ -81,11 +83,6 @@ var AwesomeProject = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  title: {
-    fontSize: 30,
-    backgroundColor: 'white',
-    marginTop: 15
-  },
   container: {
     flexDirection: 'column'
   },
