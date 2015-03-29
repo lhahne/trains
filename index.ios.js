@@ -16,6 +16,10 @@ var {
 var _ = require('lodash-node')
 var moment = require('moment')
 
+var LiveDataActions = require('./actions/LiveDataActions')
+require('./stores/StationDataStore')
+LiveDataActions.station.push('TPE')
+
 var AwesomeProject = React.createClass({
   componentDidMount: function() {
     this.fetchData()
@@ -30,7 +34,7 @@ var AwesomeProject = React.createClass({
     var late = tampereArrival.differenceInMinutes > 0
     var lateElement
     if (late) {
-      lateElement = (<Text style={[styles.trainText, {visibility: 'hidden'}]}>{' -> '}{actualArrivalTime}</Text>)
+      lateElement = (<Text style={styles.trainText}>{' -> '}{actualArrivalTime}</Text>)
     }
     return (
       <View style={styles.trainRow}>
