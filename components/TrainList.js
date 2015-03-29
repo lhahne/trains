@@ -7,9 +7,8 @@ var {
   ListView,
 } = React
 
-
-var LiveDataActions  = require('../actions/LiveDataActions')
 var StationDataStore = require('../stores/StationDataStore')
+var LiveDataActions  = require('../actions/LiveDataActions')
 
 var styles = StyleSheet.create({
   listView: {
@@ -45,14 +44,17 @@ var styles = StyleSheet.create({
 module.exports = React.createClass({
 
   componentDidMount: function() {
-    StationDataStore.stationArrivalView.onValue((stationView) => {
+    this.unsubscribe = StationDataStore.stationArrivalView.onValue((stationView) => {
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(stationView),
         loaded: true
       })
     })
+    LiveDataActions.trainListDidMount.push(true)
+  },
 
-    LiveDataActions.station.push('TPE')
+  componentWillUnmount: function() {
+    this.unsubscribe()
   },
 
   renderTrain: function(train) {
