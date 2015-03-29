@@ -30,31 +30,22 @@ var stationTrains = station
         _.contains(ACCEPTED_TRAINS, train.trainType))
   )
 
-var stationArrivalView = stationTrains.zip(station, (st, s) => {
-    return {
-      station: s,
-      stationTrains: st
-    }
-  })
-  .map((stationData) => {
-    var station = stationData.station
-    var trains  = stationData.stationTrains
+var stationArrivalView = station.zip(stationTrains, (station, trains) =>
+    _(trains).map((train) => {
+      var arrival = train.timeTableRows.filter((row) => {
+          return row.stationShortCode === station
+        })[0]
 
-    return _(trains).map((train) => {
-        var arrival = train.timeTableRows.filter((row) => {
-            return row.stationShortCode === station
-          })[0]
-
-        return {
-          trainNumber: train.trainType + ' ' + train.trainNumber,
-          arrivalTime: formatTime(arrival.scheduledTime),
-          actualArrivalTime: formatTime(arrival.liveEstimateTime),
-          late: arrival.differenceInMinutes > 0
-        }
-      })
-      .sortBy('arrivalTime')
-      .value()
-  })
+      return {
+        trainNumber: train.trainType + ' ' + train.trainNumber,
+        arrivalTime: formatTime(arrival.scheduledTime),
+        actualArrivalTime: formatTime(arrival.liveEstimateTime),
+        late: arrival.differenceInMinutes > 0
+      }
+    })
+    .sortBy('arrivalTime')
+    .value()
+  )
 
 
 module.exports = {
