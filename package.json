@@ -1,0 +1,13 @@
+{
+  "name": "AwesomeProject",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "react-native start"
+  },
+  "dependencies": {
+    "lodash-node": "^3.6.0",
+    "moment": "^2.9.0",
+    "react-native": "^0.1.0"
+  }
+}
