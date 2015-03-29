@@ -13,7 +13,7 @@ var {
   ListView,
 } = React;
 
-var _ = require('lodash-node')
+var _      = require('lodash-node')
 var moment = require('moment')
 
 var LiveDataActions  = require('./actions/LiveDataActions')

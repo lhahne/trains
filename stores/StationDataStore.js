@@ -54,7 +54,6 @@ var stationArrivalView = stationTrains.zip(station, (st, s) => {
       })
       .sortBy('arrivalTime')
       .value()
-
   })
 
 
