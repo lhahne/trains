@@ -14,7 +14,7 @@ var {
 var StationPicker = require('./components/StationPicker')
 var TrainList     = require('./components/TrainList')
 
-var AwesomeProject = React.createClass({
+var TrainProject = React.createClass({
 
   render: function() {
     return (
@@ -33,4 +33,4 @@ var styles = StyleSheet.create({
   }
 })
 
-AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
+AppRegistry.registerComponent('TrainProject', () => TrainProject);
