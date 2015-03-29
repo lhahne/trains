@@ -29,12 +29,12 @@ var AwesomeProject = React.createClass({
     var tampereArrival = train.timeTableRows.filter((row) => {
       return row.stationShortCode == 'TPE'
     })[0]
-    var arrivalTime = moment(tampereArrival.scheduledTime).format('hh:mm')
-    var actualArrivalTime = moment(tampereArrival.liveEstimateTime).format('hh:mm')
+    var arrivalTime = moment(tampereArrival.scheduledTime).format('HH:mm')
+    var actualArrivalTime = moment(tampereArrival.liveEstimateTime).format('HH:mm')
     var late = tampereArrival.differenceInMinutes > 0
     var lateElement
     if (late) {
-      lateElement = (<Text style={styles.trainText}>{' -> '}{actualArrivalTime}</Text>)
+      lateElement = (<Text style={styles.trainText}>{'→'}{actualArrivalTime}</Text>)
     }
     return (
       <View style={styles.trainRow}>
