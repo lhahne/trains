@@ -49,7 +49,7 @@ var stationArrivalView = station.zip(stationTrains, (station, trains) =>
         late: arrival.differenceInMinutes > 0
       }
     })
-    .sortBy('arrivalTime')
+    .sortBy((element) => element.arrivalTime.isValid() ? element.arrivalTime : element.departureTime)
     .value()
   )
 
