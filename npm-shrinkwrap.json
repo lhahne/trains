@@ -2,10 +2,20 @@
   "name": "AwesomeProject",
   "version": "0.0.1",
   "dependencies": {
+    "baconjs": {
+      "version": "0.7.53",
+      "from": "baconjs@*",
+      "resolved": "https://registry.npmjs.org/baconjs/-/baconjs-0.7.53.tgz"
+    },
     "lodash-node": {
       "version": "3.6.0",
       "from": "lodash-node@>=3.6.0 <4.0.0",
       "resolved": "https://registry.npmjs.org/lodash-node/-/lodash-node-3.6.0.tgz"
+    },
+    "moment": {
+      "version": "2.9.0",
+      "from": "moment@*",
+      "resolved": "https://registry.npmjs.org/moment/-/moment-2.9.0.tgz"
     },
     "react-native": {
       "version": "0.1.0",
