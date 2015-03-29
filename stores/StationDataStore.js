@@ -35,17 +35,17 @@ var stationArrivalView = station.zip(stationTrains, (station, trains) =>
       var arrival   = _(rows).filter((row) => row.type === 'ARRIVAL').first()
       var departure = _(rows).filter((row) => row.type === 'DEPARTURE').first()
 
-      arrival   = arrival ? arrival : {}
-      departure = departure ? departure : {}
+      arrival   = arrival || {}
+      departure = departure || {}
 
       return {
         firstStation: _(train.timeTableRows).first().stationShortCode,
         lastStation: _(train.timeTableRows).last().stationShortCode,
         trainNumber: train.trainType + ' ' + train.trainNumber,
-        arrivalTime: moment(arrival.scheduledTime),
-        actualArrivalTime: moment(arrival.liveEstimateTime),
-        departureTime: moment(departure.scheduledTime),
-        actualDepartureTime: moment(departure.liveEstimateTime),
+        arrivalTime: moment(arrival.scheduledTime || null),
+        actualArrivalTime: moment(arrival.liveEstimateTime || null),
+        departureTime: moment(departure.scheduledTime || null),
+        actualDepartureTime: moment(departure.liveEstimateTime || null),
         late: arrival.differenceInMinutes > 0
       }
     })

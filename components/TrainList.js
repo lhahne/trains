@@ -17,7 +17,7 @@ var LiveDataActions  = require('../actions/LiveDataActions')
 var TIME_FORMAT      = 'HH:mm'
 
 var formatTime = (time) =>
-  time.format(TIME_FORMAT)
+  time.isValid() ? time.format(TIME_FORMAT) : null
 
 var styles = StyleSheet.create({
   listView: {
