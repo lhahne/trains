@@ -7,6 +7,8 @@ var {
   ListView,
 } = React
 
+var _ = require('lodash-node')
+
 var StationDataStore = require('../stores/StationDataStore')
 var LiveDataActions  = require('../actions/LiveDataActions')
 
@@ -78,7 +80,7 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {
       dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1 !== row2,
+        rowHasChanged: (row1, row2) => _.isEqual(row1, row2)
       }),
       loaded: false
     }
