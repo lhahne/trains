@@ -1,2 +1,3 @@
-ALL RIGHTS RESERVED
+Copyright Lauri Hahne
 
+ALL RIGHTS RESERVED
