@@ -61,15 +61,13 @@ var styles = StyleSheet.create({
   },
 })
 
-var stationCodes
-
 module.exports = React.createClass({
 
   componentDidMount: function() {
     this.unsubscribe =
       Bacon.zipAsArray(StationDataStore.stationArrivalView, StationMetadataStore.stationsByCode)
-      .onValues((stationView, sc) => {
-        stationCodes = sc
+      .onValues((stationView, stationCodes) => {
+        this.stationCodes = stationCodes
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(stationView),
         })
@@ -102,8 +100,8 @@ module.exports = React.createClass({
       var departLateElement = <Text style={styles.trainTextOffTime}></Text>
     }
 
-    var firstStation = stationCodes[train.firstStation].stationName
-    var lastStation  = stationCodes[train.lastStation].stationName
+    var firstStation = this.stationCodes[train.firstStation].stationName
+    var lastStation  = this.stationCodes[train.lastStation].stationName
 
     return (
       <View style={styles.trainRow}>
