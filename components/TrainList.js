@@ -12,9 +12,10 @@ var _      = require('lodash-node')
 var moment = require('moment')
 
 var StationDataStore = require('../stores/StationDataStore')
+var StationMetadataStore = require('../stores/StationMetadataStore')
 var LiveDataActions  = require('../actions/LiveDataActions')
 
-var TIME_FORMAT      = 'HH:mm'
+var TIME_FORMAT = 'HH:mm'
 
 var formatTime = (time) =>
   time.isValid() ? time.format(TIME_FORMAT) : null
@@ -59,12 +60,15 @@ var styles = StyleSheet.create({
   },
 })
 
+var stationCodes
+
 module.exports = React.createClass({
 
   componentDidMount: function() {
-    this.unsubscribe = StationDataStore.stationArrivalView.onValue((stationView) => {
+    this.unsubscribe = StationDataStore.stationArrivalView.zip(StationMetadataStore.stationsByCode, (stationView, stationCodes) => {return {stationView: stationView, stationCodes: stationCodes}}).onValue( (param) => {
+      stationCodes = param.stationCodes
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(stationView),
+        dataSource: this.state.dataSource.cloneWithRows(param.stationView),
       })
     })
     LiveDataActions.trainListDidMount.push(true)
@@ -95,6 +99,9 @@ module.exports = React.createClass({
       var departLateElement = <Text style={styles.trainTextOffTime}></Text>
     }
 
+    var firstStation = stationCodes[train.firstStation].stationName
+    var lastStation  = stationCodes[train.lastStation].stationName
+
     return (
       <View style={styles.trainRow}>
         <View style={[styles.trainRowLeft, arrivesLate && {backgroundColor: 'yellow'}, departsLate && {backgroundColor: 'red'}]}>
@@ -102,7 +109,7 @@ module.exports = React.createClass({
         </View>
         <View style={styles.rightColumn}>
           <View>
-            <Text style={styles.trainText}>{train.firstStation} - {train.lastStation}</Text>
+            <Text style={styles.trainText}>{firstStation} - {lastStation}</Text>
           </View>
           <View style={styles.trainRowRight}>
             {trainTextElement(train.arrivalTime)}

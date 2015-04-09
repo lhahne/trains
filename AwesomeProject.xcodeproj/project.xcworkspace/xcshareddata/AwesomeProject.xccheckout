@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>11F135C8-6389-4655-A9ED-6EE7B4D897E1</string>
+	<key>IDESourceControlProjectName</key>
+	<string>AwesomeProject</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>F95EB379D8BAAA3AE2EAFF2DC8F0713972C2E84C</key>
+		<string>https://github.com/lhahne/trains.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>AwesomeProject.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>F95EB379D8BAAA3AE2EAFF2DC8F0713972C2E84C</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/lhahne/trains.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>F95EB379D8BAAA3AE2EAFF2DC8F0713972C2E84C</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>F95EB379D8BAAA3AE2EAFF2DC8F0713972C2E84C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>AwesomeProject</string>
+		</dict>
+	</array>
+</dict>
+</plist>

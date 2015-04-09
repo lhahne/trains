@@ -7,7 +7,6 @@ var METADATA_URL = 'http://rata.digitraffic.fi/api/v1/metadata/station'
 
 var stations = Bacon.fromPromise(fetch(METADATA_URL))
   .flatMap((response) => Bacon.fromPromise(response.json()))
-  .toProperty()
 
 var stationsByCode = stations.map((stations) =>
   _.transform(stations, (result, station) => {
@@ -15,8 +14,9 @@ var stationsByCode = stations.map((stations) =>
     var stationCode = station.stationShortCode
 
     delete station.stationShortCode
+    station.stationName = station.stationName.replace(' asema', '')
     result[stationCode] = station
-    
+
     return result
   }, {})
 )
