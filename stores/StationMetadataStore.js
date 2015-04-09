@@ -9,16 +9,13 @@ var stations = Bacon.fromPromise(fetch(METADATA_URL))
   .flatMap((response) => Bacon.fromPromise(response.json()))
 
 var stationsByCode = stations.map((stations) =>
-  _.transform(stations, (result, station) => {
-    station = _.clone(station)
-    var stationCode = station.stationShortCode
-
-    delete station.stationShortCode
-    station.stationName = station.stationName.replace(' asema', '')
-    result[stationCode] = station
-
-    return result
-  }, {})
+  _(stations)
+    .map(station => {
+      station.stationName = station.stationName.replace(' asema', '')
+      return station
+    })
+    .indexBy(station => station.stationShortCode)
+    .value()
 )
 
 module.exports = {
