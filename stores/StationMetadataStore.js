@@ -14,7 +14,7 @@ var stationsByCode = stations.map((stations) =>
       station.stationName = station.stationName.replace(' asema', '')
       return station
     })
-    .indexBy(station => station.stationShortCode)
+    .indexBy('stationShortCode')
     .value()
 )
 
