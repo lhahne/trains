@@ -10,6 +10,7 @@ var {
 
 var _      = require('lodash-node')
 var moment = require('moment')
+var Bacon  = require('baconjs')
 
 var StationDataStore = require('../stores/StationDataStore')
 var StationMetadataStore = require('../stores/StationMetadataStore')
@@ -65,12 +66,12 @@ var stationCodes
 module.exports = React.createClass({
 
   componentDidMount: function() {
-    this.unsubscribe = StationDataStore.stationArrivalView
-      .zip(StationMetadataStore.stationsByCode, (stationView, stationCodes) => {return {stationView: stationView, stationCodes: stationCodes}})
-      .onValue(param => {
-        stationCodes = param.stationCodes
+    this.unsubscribe =
+      Bacon.zipAsArray(StationDataStore.stationArrivalView, StationMetadataStore.stationsByCode)
+      .onValues((stationView, sc) => {
+        stationCodes = sc
         this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(param.stationView),
+          dataSource: this.state.dataSource.cloneWithRows(stationView),
         })
       })
     LiveDataActions.trainListDidMount.push(true)
