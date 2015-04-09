@@ -65,12 +65,14 @@ var stationCodes
 module.exports = React.createClass({
 
   componentDidMount: function() {
-    this.unsubscribe = StationDataStore.stationArrivalView.zip(StationMetadataStore.stationsByCode, (stationView, stationCodes) => {return {stationView: stationView, stationCodes: stationCodes}}).onValue( (param) => {
-      stationCodes = param.stationCodes
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(param.stationView),
+    this.unsubscribe = StationDataStore.stationArrivalView
+      .zip(StationMetadataStore.stationsByCode, (stationView, stationCodes) => {return {stationView: stationView, stationCodes: stationCodes}})
+      .onValue( (param) => {
+        stationCodes = param.stationCodes
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(param.stationView),
+        })
       })
-    })
     LiveDataActions.trainListDidMount.push(true)
   },
 
