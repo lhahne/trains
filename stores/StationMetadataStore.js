@@ -7,6 +7,7 @@ var METADATA_URL = 'http://rata.digitraffic.fi/api/v1/metadata/station'
 
 var stations = Bacon.fromPromise(fetch(METADATA_URL))
   .flatMap((response) => Bacon.fromPromise(response.json()))
+  .toProperty()
 
 var stationsByCode = stations.map((stations) =>
   _(stations)
