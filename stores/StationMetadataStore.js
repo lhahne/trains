@@ -9,7 +9,7 @@ var stations = Bacon.fromPromise(fetch(METADATA_URL))
   .flatMap((response) => Bacon.fromPromise(response.json()))
   .toProperty()
 
-var stationsByCode = stations.map((stations) =>
+var stationsByCode = stations.map(stations =>
   _(stations)
     .map(station => {
       station.stationName = station.stationName.replace(' asema', '')
