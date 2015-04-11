@@ -26,6 +26,8 @@ var stationTrains = station
         _.contains(ACCEPTED_TRAINS, train.trainType))
   )
 
+stationTrains.onError( e => console.log("crash and burn"))
+
 // thanks guys. the api dataformat sucks
 var stationArrivalView = station.zip(stationTrains, (station, trains) =>
     _(trains).map((train) => {
