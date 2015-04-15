@@ -6,22 +6,25 @@ var _      = require('lodash-node')
 var Bacon  = require('baconjs')
 var moment = require('moment')
 
+require('es6-promise').polyfill()
+require('isomorphic-fetch')
+
 var STATION_DATA_URL = 'http://rata.digitraffic.fi/api/v1/live-trains?station='
 var ACCEPTED_TRAINS  = ['IC', 'S', 'P', 'H']
 
 var station = LiveDataActions.station
 
 var stationTrains = station
-  .map((station) =>
+  .map(station =>
     STATION_DATA_URL + station
   )
-  .flatMap((url) =>
+  .flatMap(url =>
     Bacon.fromPromise(fetch(url))
   )
-  .flatMap((response) =>
+  .flatMap(response =>
     Bacon.fromPromise(response.json())
   )
-  .map((trains) =>
+  .map(trains =>
     trains.filter((train) =>
         _.contains(ACCEPTED_TRAINS, train.trainType))
   )

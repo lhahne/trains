@@ -3,6 +3,9 @@
 var Bacon = require('baconjs')
 var _     = require('lodash-node')
 
+require('es6-promise').polyfill()
+require('isomorphic-fetch')
+
 var LiveDataActions = require('../actions/LiveDataActions.js')
 
 var METADATA_URL = 'http://rata.digitraffic.fi/api/v1/metadata/station'
