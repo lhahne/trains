@@ -2,7 +2,7 @@
 
 var LiveDataActions = require('../actions/LiveDataActions')
 
-var _      = require('lodash-node')
+var _      = require('lodash')
 var Bacon  = require('baconjs')
 var moment = require('moment')
 

@@ -2,6 +2,7 @@
 
 var React = require('react')
 var Bacon = require('baconjs')
+var _     = require('lodash')
 
 var StationDataStore     = require('../stores/StationDataStore')
 var StationMetadataStore = require('../stores/StationMetadataStore')
@@ -34,8 +35,13 @@ var TrainList = React.createClass({
   },
 
   render() {
+    var renderRows = rows => {
+      return _.map(rows, row => {
+        return <li>{row.trainNumber}</li>
+      })
+    }
     if (this.state.stationView.length > 0) {
-      return <h1>profit</h1>
+      return <ul>{renderRows(this.state.stationView)}</ul>
     }
     else {
       return <h1>sakfjh</h1>

@@ -1,7 +1,7 @@
 'use strict'
 
 var Bacon = require('baconjs')
-var _     = require('lodash-node')
+var _     = require('lodash')
 
 require('es6-promise').polyfill()
 require('isomorphic-fetch')
