@@ -11,14 +11,14 @@ var LiveDataActions = require('../actions/LiveDataActions')
 var TrainList = React.createClass({
 
   getInitialState() {
-    return {stationView: {}}
+    return {stationView: []}
   },
 
   componentDidMount: function() {
     this.unsubscribe =
       Bacon.zipAsArray(StationDataStore.stationArrivalView, StationMetadataStore.stationsByCode)
       .onValues((stationView, stationCodes) => {
-        console.log("got state")
+        console.log(stationView)
         this.stationCodes = stationCodes
         this.setState({
           stationView: stationView
@@ -34,7 +34,7 @@ var TrainList = React.createClass({
   },
 
   render() {
-    if (this.state.stationView.firstStation) {
+    if (this.state.stationView.length > 0) {
       return <h1>profit</h1>
     }
     else {
