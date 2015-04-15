@@ -19,7 +19,6 @@ var TrainList = React.createClass({
     this.unsubscribe =
       Bacon.zipAsArray(StationDataStore.stationArrivalView, StationMetadataStore.stationsByCode)
       .onValues((stationView, stationCodes) => {
-        console.log(stationView)
         this.stationCodes = stationCodes
         this.setState({
           stationView: stationView
