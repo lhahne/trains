@@ -6,6 +6,8 @@ var Bacon = require('baconjs')
 var StationDataStore     = require('../stores/StationDataStore')
 var StationMetadataStore = require('../stores/StationMetadataStore')
 
+var LiveDataActions = require('../actions/LiveDataActions')
+
 var TrainList = React.createClass({
 
   getInitialState() {
@@ -16,11 +18,15 @@ var TrainList = React.createClass({
     this.unsubscribe =
       Bacon.zipAsArray(StationDataStore.stationArrivalView, StationMetadataStore.stationsByCode)
       .onValues((stationView, stationCodes) => {
+        console.log("got state")
         this.stationCodes = stationCodes
         this.setState({
-          stationView: stationView,
+          stationView: stationView
         })
       })
+
+    LiveDataActions.trainListDidMount.onValue(() => LiveDataActions.station.push('TPE'))
+    LiveDataActions.trainListDidMount.push(true)
   },
 
   componentWillUnmount: function() {
