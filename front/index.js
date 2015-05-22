@@ -36,7 +36,7 @@ var TrainList = React.createClass({
   render() {
     var renderRows = rows => {
       return _.map(rows, row => {
-        return <li>{row.trainNumber}</li>
+        return <li>{row.trainNumber} {row.firstStation}-{row.lastStation}</li>
       })
     }
     if (this.state.stationView.length > 0) {
